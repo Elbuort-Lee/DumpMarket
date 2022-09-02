@@ -21,6 +21,12 @@
     <ClCompile Include="HandleMsg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="profile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="logfile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HandleMsg.h">
@@ -30,6 +36,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="toolGeneral.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="profile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="glogbase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="logfile.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

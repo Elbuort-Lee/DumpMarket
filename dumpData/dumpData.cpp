@@ -7,10 +7,9 @@
 #include <thread>
 int main()
 {
-    //g_Log = AtgoLogApi::create("dumpdata", "glog.ini");
     int date = ToolGen::currentDate();
     int time = 0;
-    HandleMsg msg;
+    HandleMsg msg("dumpdata.ini");
     msg.StartThread();
     msg.Init(date);
     msg.Start();

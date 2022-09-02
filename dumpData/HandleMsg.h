@@ -2,6 +2,8 @@
 #include "marketstruct.h"
 #include "RedisApi.h"
 #include "RedisSpi.h"
+#include "profile.h"
+#include "logfile.h"
 
 #include<stdio.h>
 #include<queue>
@@ -14,7 +16,7 @@
 class HandleMsg : public CRedisSpi
 {
 public:
-    HandleMsg();
+    HandleMsg(const char* configName);
     ~HandleMsg();
     void Init(int date);
     void CloseFile();
@@ -38,12 +40,18 @@ protected:
     void HandleTrans();
     void HandleKline1();
 
+    bool ReadConfig(const char* fileName);
+    
 private:
     std::string m_path;
     std::string m_fileNameQuoteE;
     std::string m_fileNameTrans;
     std::string m_fileNameKline1;
     int m_date;
+    std::string m_ip;
+    int m_port;
+    std::string m_passwd;
+    int m_dbId;
 
 
     CRedisApi* m_api = nullptr;
@@ -71,6 +79,6 @@ private:
     std::mutex m_close_trans_lock;
     std::mutex m_close_kline1_lock;
 
-
+    CLogFile * m_clog = nullptr;
 
 };

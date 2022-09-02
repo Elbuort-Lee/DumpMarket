@@ -157,10 +157,15 @@
   <ItemGroup>
     <ClCompile Include="dumpData.cpp" />
     <ClCompile Include="HandleMsg.cpp" />
+    <ClCompile Include="logfile.cpp" />
+    <ClCompile Include="profile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="glogbase.h" />
     <ClInclude Include="HandleMsg.h" />
+    <ClInclude Include="logfile.h" />
     <ClInclude Include="marketstruct.h" />
+    <ClInclude Include="profile.h" />
     <ClInclude Include="toolGeneral.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

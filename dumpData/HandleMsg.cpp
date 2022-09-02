@@ -1,7 +1,18 @@
 #include "HandleMsg.h"
-HandleMsg::HandleMsg()
+HandleMsg::HandleMsg(const char* configName)
 {
-    m_path = "E:/DCE/QuoteE";
+    m_clog = new CLogFile(".", "dumpdata");
+    bool ret = ReadConfig(configName);
+    if (ret)
+    {
+        m_clog->WriteLogEx(LEV_INFO, "%s:%d read config is succeed.(filepath=%s)(ip=%s)(port=%d)(passwd=%s)(dbid=%d)",
+            __FILE__, __LINE__, m_path.c_str(), m_ip.c_str(), m_port, m_passwd.c_str(),m_dbId);
+    }
+    else
+    {
+        m_clog->WriteLogEx(LEV_ERROR, "%s:%d read config is failed.(filepath=%s)(ip=%s)(port=%d)(passwd=%s)(dbid=%d)", 
+            __FILE__, __LINE__, m_path.c_str(), m_ip.c_str(), m_port, m_passwd.c_str(), m_dbId);
+    }
     m_fileNameQuoteE = "QuoteE";
     m_fileNameTrans = "Trans";
     m_fileNameKline1 = "Kline1";
@@ -28,6 +39,7 @@ HandleMsg::~HandleMsg()
 void HandleMsg::Init(int date)
 {
     m_date = date;
+    m_clog->WriteLogEx(LEV_INFO, "%s:%d [Init](date=%d)", __FILE__, __LINE__, m_date);
     //quoteE
     char szMsg[2048];
     char fileOutQuoteE[256] = { 0 };
@@ -38,7 +50,7 @@ void HandleMsg::Init(int date)
         m_fpQuoteE = fopen(fileOutQuoteE, "ab+");
         if (m_fpQuoteE == NULL)
         {
-            printf("open file[%s] failed.\n", fileOutQuoteE);
+            m_clog->WriteLogEx(LEV_ERROR, "%s:%d open file[%s] failed.", __FILE__, __LINE__, fileOutQuoteE);
         }
         memset(szMsg, 0, sizeof(szMsg));
         snprintf(szMsg, sizeof(szMsg), "localtime,symbol,"
@@ -64,7 +76,7 @@ void HandleMsg::Init(int date)
         m_fpTrans = fopen(fileOutTrans, "ab+");
         if (m_fpTrans == NULL)
         {
-            printf("open file[%s] failed.\n", fileOutTrans);
+            m_clog->WriteLogEx(LEV_ERROR, "%s:%d open file[%s] failed.", __FILE__, __LINE__, fileOutTrans);
         }
         memset(szMsg, 0, sizeof(szMsg));
         snprintf(szMsg, sizeof(szMsg), "eventtime,localtime,tradetime,symbol,filledpx,filledqty,make,tradeid,bidid,askid\n");
@@ -82,7 +94,7 @@ void HandleMsg::Init(int date)
         m_fpKline1 = fopen(fileOutKline1, "ab+");
         if (m_fpKline1 == NULL)
         {
-            printf("open file[%s] failed.\n", fileOutKline1);
+            m_clog->WriteLogEx(LEV_ERROR, "%s:%d open file[%s] failed.", __FILE__, __LINE__, fileOutKline1);
         }
         memset(szMsg, 0, sizeof(szMsg));
         snprintf(szMsg, sizeof(szMsg), "eventtime,localtime,starttime,endtime,symbol,cumqty,cumamt,activeqty,activeamt,openpx,closepx,highpx,lowpx,isrunend,num,interval,firstid,lastid\n");
@@ -117,11 +129,16 @@ void HandleMsg::CloseFile()
 void HandleMsg::Start()
 {
     int ret = -1;
-    ret = m_api->Connect("8.219.188.209", 6379, "080814080", 3);
+    ret = m_api->Connect(m_ip.c_str(), m_port, m_passwd.c_str(), m_dbId);
+    m_clog->WriteLogEx(LEV_INFO, "%s:%d [Start](Connect=%d)", __FILE__, __LINE__, ret);
     ret = m_api->RegisterSpi(this);
+    m_clog->WriteLogEx(LEV_INFO, "%s:%d [Start](RegisterSpi=%d)", __FILE__, __LINE__, ret);
     ret = m_api->Psubscrib("QuoteE");
+    m_clog->WriteLogEx(LEV_INFO, "%s:%d [Start](QuoteE Psubscrib=%d)", __FILE__, __LINE__, ret);
     ret = m_api->Psubscrib("Trans");
+    m_clog->WriteLogEx(LEV_INFO, "%s:%d [Start](Trans Psubscrib=%d)", __FILE__, __LINE__, ret);
     ret = m_api->Psubscrib("KStreams");
+    m_clog->WriteLogEx(LEV_INFO, "%s:%d [Start](KStreams Psubscrib=%d)", __FILE__, __LINE__, ret);
 }
 
 void HandleMsg::StartThread()
@@ -157,7 +174,7 @@ void HandleMsg::OnRecvKline(const char * msg, int len, int type)
 
 void HandleMsg::OnRecvOtherMsg(const char * msg, int len)
 {
-    printf("msg=%s,len=%d\n", msg, len);
+    m_clog->WriteLogEx(LEV_INFO, "%s:%d [OnRecvOtherMsg](msg=%s)(len=%d)", __FILE__, __LINE__, msg, len);
 }
 
 void HandleMsg::PushQuoteE(const char * msg)
@@ -188,7 +205,7 @@ void HandleMsg::HandleQuoteE()
         //24h运行必备
         if (m_fpQuoteE == NULL)
         {
-            printf("m_fpQuoteE open file failed.\n");
+            m_clog->WriteLogEx(LEV_ERROR, "%s:%d m_fpQuoteE open file failed.", __FILE__, __LINE__);
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
             continue;
         }
@@ -343,7 +360,7 @@ void HandleMsg::HandleQuoteE()
             }
             else
             {
-                //print
+                m_clog->WriteLogEx(LEV_ERROR, "%s:%d QuoteE no find bids,msg=%s", __FILE__, __LINE__,msg.c_str());
                 continue;
             }
             const char* pasks = "asks";
@@ -472,7 +489,7 @@ void HandleMsg::HandleQuoteE()
             }
             else
             {
-                //print
+                m_clog->WriteLogEx(LEV_ERROR, "%s:%d QuoteE no find asks,msg=%s", __FILE__, __LINE__, msg.c_str());
                 continue;
             }
             char szMsg[2048];
@@ -506,7 +523,7 @@ void HandleMsg::HandleTrans()
     {
         if (m_fpTrans == NULL)
         {
-            printf("m_fpTrans open file failed.\n");
+            m_clog->WriteLogEx(LEV_ERROR, "%s:%d m_fpTrans open file failed.", __FILE__, __LINE__);
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
             continue;
         }
@@ -566,7 +583,7 @@ void HandleMsg::HandleTrans()
             }
             else
             {
-                //print
+                m_clog->WriteLogEx(LEV_ERROR, "%s:%d Trans no find trade,msg=%s", __FILE__, __LINE__, msg.c_str());
                 continue;
             }
             char szMsg[512];
@@ -590,7 +607,7 @@ void HandleMsg::HandleKline1()
     {
         if (m_fpKline1 == NULL)
         {
-            printf("m_fpKline1 open file failed.\n");
+            m_clog->WriteLogEx(LEV_ERROR, "%s:%d m_fpKline1 open file failed.", __FILE__, __LINE__);
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
             continue;
         }
@@ -667,7 +684,7 @@ void HandleMsg::HandleKline1()
             }
             else
             {
-                //print
+                m_clog->WriteLogEx(LEV_ERROR, "%s:%d Kline1 no find kline,msg=%s", __FILE__, __LINE__, msg.c_str());
                 continue;
             }
             char szMsg[512];
@@ -683,5 +700,29 @@ void HandleMsg::HandleKline1()
             }
         }
     }
+}
+
+bool HandleMsg::ReadConfig(const char * fileName)
+{
+
+    TIniFile* p = new TIniFile();
+    if (!p->Open(fileName))
+    {
+        delete p;
+        p = nullptr;
+        return false;
+    }
+    char szvalue[512] = { 0 };
+    p->ReadString("dump", "outfilepath", "./", szvalue,sizeof(szvalue));
+    m_path = szvalue;
+    memset(szvalue, 0, sizeof(szvalue));
+    p->ReadString("redis", "ip", "127.0.0.1", szvalue, sizeof(szvalue));
+    m_ip = szvalue;
+    m_port = p->ReadInt("redis", "port", 6379);
+    memset(szvalue, 0, sizeof(szvalue));
+    p->ReadString("redis", "passwd", "123456", szvalue, sizeof(szvalue));
+    m_passwd = szvalue;
+    m_dbId = p->ReadInt("redis", "dbid", 3);
+    return true;
 }
 
