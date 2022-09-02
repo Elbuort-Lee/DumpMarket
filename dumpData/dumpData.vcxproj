@@ -91,13 +91,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../CRedis;../../cppcommons/3rdlibs/redis-3.0/deps/hiredis;../../cppcommons/3rdlibs/redis-3.0/src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Output/CRedis/include;../../cppcommons/3rdlibs/redis-3.0/deps/hiredis;../../cppcommons/3rdlibs/redis-3.0/src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../cppcommons/3rdlibs/redis-3.0/msvs/x64/Debug;../Output/x64/Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../cppcommons/3rdlibs/redis-3.0/msvs/x64/Debug;../Output/CRedis/windows/x64/Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>Win32_Interop.lib;hiredis.lib;CRedis.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
