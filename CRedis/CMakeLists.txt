@@ -29,7 +29,6 @@ aux_source_directory(. source_list)
 
 add_library(CRedis STATIC ${source_list})
 target_link_libraries(CRedis dl pthread -lhiredis)
-file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/Output/${CMAKE_BUILD_TYPE})
-file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}../Output/CRedis/linux)
+file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}../Output/CRedis/linux/)
 add_custom_command(TARGET CRedis POST_BUILD COMMAND cp ${PROJECT_BINARY_DIR}/Build/linux/${CMAKE_BUILD_TYPE}/libCRedis.a ${PROJECT_BINARY_DIR}../Output/CRedis/linux/)
 add_custom_command(TARGET CRedis POST_BUILD COMMAND cp ${PROJECT_BINARY_DIR}/RedisApi.h RedisSpi.h ${PROJECT_BINARY_DIR}../Output/CRedis/include/)
