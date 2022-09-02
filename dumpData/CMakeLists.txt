@@ -27,4 +27,4 @@ ENDIF ()
 
 aux_source_directory(. source_list)
 add_executable(dumpdata ${source_list})
-target_link_libraries(dumpdata dl pthread libCRedis.a)
+target_link_libraries(dumpdata dl pthread libCRedis.a -lhiredis)
