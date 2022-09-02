@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.9)
-project(dumpmarket)
+project(dumpdata)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -7,12 +7,12 @@ file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/Build/linux/${CMAKE_BUILD_TYPE})
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/Build/linux/${CMAKE_BUILD_TYPE})
 
 INCLUDE_DIRECTORIES(BEFORE .)
-##INCLUDE_DIRECTORIES(BEFORE ../../trunk/libs/toolGeneral/include)
+INCLUDE_DIRECTORIES(BEFORE ../Output/CRedis/include)
 ##INCLUDE_DIRECTORIES(BEFORE ../../trunk/libs/AtgoLogApi/include)
 ##INCLUDE_DIRECTORIES(BEFORE ../../trunk/libs/AtgoDtoApi/include)
 
 LINK_DIRECTORIES(.)
-##LINK_DIRECTORIES(../../trunk/libs/mysql_5_6_41/lib/linux/x86_64)
+LINK_DIRECTORIES(../Output/CRedis/linux)
 ##LINK_DIRECTORIES(../../trunk/libs/glog_0_3_5/lib/linux/x86_64)
 
 add_compile_options(-fPIC)
@@ -26,10 +26,5 @@ ELSE ()
 ENDIF ()
 
 aux_source_directory(. source_list)
-
-add_library(dumpmarket STATIC ${source_list})
-target_link_libraries(dumpmarket dl pthread -lhiredis)
-file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/Output/${CMAKE_BUILD_TYPE})
-file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/Output/include)
-add_custom_command(TARGET dumpmarket POST_BUILD COMMAND cp ${PROJECT_BINARY_DIR}/Build/linux/${CMAKE_BUILD_TYPE}/libdumpmarket.a ${PROJECT_BINARY_DIR}/Output/${CMAKE_BUILD_TYPE}/)
-add_custom_command(TARGET dumpmarket POST_BUILD COMMAND cp ${PROJECT_BINARY_DIR}/RedisApi.h RedisSpi.h ${PROJECT_BINARY_DIR}/Output/include/)
+add_executable(dumpdata ${source_list})
+target_link_libraries(dumpdata dl pthread libCRedis.a)
