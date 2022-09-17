@@ -1,3 +1,57 @@
+create database market character set utf8;
+
+
+CREATE TABLE IF NOT EXISTS `kline1m`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `eventtime` BIGINT(20) NOT NULL,
+   `localtime` BIGINT(20) NOT NULL,
+   `symbol` VARCHAR(40) NOT NULL,
+   `openpx` double(16,8),
+   `closepx` double(16,8),
+   `highpx` double(16,8),
+   `lowpx` double(16,8),
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `test1`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `eventtime` BIGINT(20) NOT NULL,
+   `openpx` double(16,8),
+   isrunend BOOLEAN,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `kline3m`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `num` BIGINT(20) NOT NULL,
+   `cumqty` double(16,8),
+   `symbol` VARCHAR(40) NOT NULL,
+   isrunend BOOLEAN,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+struct Kline1
+{
+    long long eventtime;//事件时间
+    long long localtime;//本地时间
+    long long starttime;//这根K线的起始时间
+    long long endtime;//这根K线的结束时间
+    long long firstid;//这根K线期间第一笔成交ID
+    long long lastid;//这根K线期间末一笔成交ID
+    long long num;//这根K线期间成交笔数
+    double openpx;//这根K线期间第一笔成交价
+    double closepx;//这根K线期间末一笔成交价
+    double highpx;//这根K线期间最高成交价
+    double lowpx;//这根K线期间最低成交价
+    double cumqty;//这根K线期间成交量
+    double cumamt;//这根K线期间成交额
+    double activeqty;//主动买入的成交量
+    double activeamt;//主动买入的成交额
+    char symbol[40];//交易对
+    char interval[4];//K线间隔
+    bool isrunend;//这根K线是否完结(是否已经开始下一根K线)0-false,1-true
+};
+
 
 {
   "e": "kline",     // 事件类型
