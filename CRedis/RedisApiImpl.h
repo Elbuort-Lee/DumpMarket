@@ -1,3 +1,9 @@
+/*
+V1.0.2.0 °ÑKStreams »»³ÉKline1m
+
+
+*/
+
 #pragma once
 #include "RedisApi.h"
 
@@ -10,6 +16,9 @@
 
 #include <string.h>
 #include <thread>
+
+#define VERSION "V1.0.2.0"
+
 
 
 class CRedisApiImpl : public CRedisApi

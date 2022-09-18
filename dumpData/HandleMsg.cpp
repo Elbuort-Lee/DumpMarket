@@ -2,6 +2,7 @@
 HandleMsg::HandleMsg(const char* configName)
 {
     m_clog = new CLogFile(".", "dumpdata");
+    m_clog->WriteLogEx(LEV_INFO, "%s:%d dump version %s", __FILE__, __LINE__, VERSION);
     bool ret = ReadConfig(configName);
     if (ret)
     {
@@ -531,7 +532,7 @@ void HandleMsg::HandleTrans()
         msg.clear();
         {
             std::unique_lock<std::mutex> lck(m_trans_lock);
-            if (m_quoteE_cv.wait_for(lck, std::chrono::milliseconds(10), [this] {return !this->m_trans_que.empty(); }))
+            if (m_trans_cv.wait_for(lck, std::chrono::milliseconds(10), [this] {return !this->m_trans_que.empty(); }))
             {
                 msg = m_trans_que.front();
                 m_trans_que.pop();
@@ -615,7 +616,7 @@ void HandleMsg::HandleKline1()
         msg.clear();
         {
             std::unique_lock<std::mutex> lck(m_kline1_lock);
-            if (m_quoteE_cv.wait_for(lck, std::chrono::milliseconds(10), [this] {return !this->m_kline1_que.empty(); }))
+            if (m_kline1_cv.wait_for(lck, std::chrono::milliseconds(10), [this] {return !this->m_kline1_que.empty(); }))
             {
                 msg = m_kline1_que.front();
                 m_kline1_que.pop();

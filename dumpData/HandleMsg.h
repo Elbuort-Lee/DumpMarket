@@ -1,3 +1,8 @@
+/*
+v1.0.2.0 : 修复HandleTrans中的m_quoteE_cv为m_trans_cv，修复HandleKline1中的m_quoteE_cv为m_kline1_cv
+
+
+*/
 #pragma once
 #include "marketstruct.h"
 #include "RedisApi.h"
@@ -12,6 +17,8 @@
 #include<condition_variable>
 #include <sys/timeb.h>
 #include <string.h>
+
+#define VERSION "v1.0.2.0"
 
 class HandleMsg : public CRedisSpi
 {

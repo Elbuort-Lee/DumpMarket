@@ -3,6 +3,7 @@
 CRedisApiImpl* CRedisApiImpl::s_redisApiImpl = nullptr;
 CRedisApiImpl::CRedisApiImpl()
 {
+    printf("version : %s\n",VERSION);
     m_pRedisContext = nullptr;
     m_spi = nullptr;
     m_recvmsg_th = std::thread(&CRedisApiImpl::RecvMsg, this);
@@ -142,9 +143,33 @@ void CRedisApiImpl::RecvMsg()
             {
                 m_spi->OnRecvTrans(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
             }
-            else if (strcmp(pRedisReply->element[1]->str, "KStreams") == 0)
+            else if (strcmp(pRedisReply->element[1]->str, "Kline1m") == 0)
             {
                 m_spi->OnRecvKline(pRedisReply->element[2]->str, pRedisReply->element[2]->len, 1);
+            }
+            else if (strcmp(pRedisReply->element[1]->str, "Kline5m") == 0)
+            {
+                m_spi->OnRecvKline(pRedisReply->element[2]->str, pRedisReply->element[2]->len, 5);
+            }
+            else if (strcmp(pRedisReply->element[1]->str, "Kline15m") == 0)
+            {
+                m_spi->OnRecvKline(pRedisReply->element[2]->str, pRedisReply->element[2]->len, 15);
+            }
+            else if (strcmp(pRedisReply->element[1]->str, "Kline30m") == 0)
+            {
+                m_spi->OnRecvKline(pRedisReply->element[2]->str, pRedisReply->element[2]->len, 30);
+            }
+            else if (strcmp(pRedisReply->element[1]->str, "Kline1h") == 0)
+            {
+                m_spi->OnRecvKline(pRedisReply->element[2]->str, pRedisReply->element[2]->len, 60);
+            }
+            else if (strcmp(pRedisReply->element[1]->str, "Kline2h") == 0)
+            {
+                m_spi->OnRecvKline(pRedisReply->element[2]->str, pRedisReply->element[2]->len, 120);
+            }
+            else if (strcmp(pRedisReply->element[1]->str, "Kline4h") == 0)
+            {
+                m_spi->OnRecvKline(pRedisReply->element[2]->str, pRedisReply->element[2]->len, 240);
             }
             freeReplyObject(pRedisReply);
         }
