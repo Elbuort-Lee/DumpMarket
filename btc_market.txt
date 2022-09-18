@@ -5,13 +5,144 @@ CREATE TABLE IF NOT EXISTS `kline1m`(
    `id` INT UNSIGNED AUTO_INCREMENT,
    `eventtime` BIGINT(20) NOT NULL,
    `localtime` BIGINT(20) NOT NULL,
-   `symbol` VARCHAR(40) NOT NULL,
+   `starttime` BIGINT(20) NOT NULL,
+   `endtime` BIGINT(20) NOT NULL,
+   `num` BIGINT(20) NOT NULL,
    `openpx` double(16,8),
    `closepx` double(16,8),
    `highpx` double(16,8),
    `lowpx` double(16,8),
+   `cumqty` double(38,8),
+   `cumamt` double(38,8),
+   `activeqty` double(38,8),
+   `activeamt` double(38,8),
+   `symbol` VARCHAR(40) NOT NULL,
+   isrunend INT NOT NULL,
    PRIMARY KEY ( `id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `kline5m`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `eventtime` BIGINT(20) NOT NULL,
+   `localtime` BIGINT(20) NOT NULL,
+   `starttime` BIGINT(20) NOT NULL,
+   `endtime` BIGINT(20) NOT NULL,
+   `num` BIGINT(20) NOT NULL,
+   `openpx` double(16,8),
+   `closepx` double(16,8),
+   `highpx` double(16,8),
+   `lowpx` double(16,8),
+   `cumqty` double(38,8),
+   `cumamt` double(38,8),
+   `activeqty` double(38,8),
+   `activeamt` double(38,8),
+   `symbol` VARCHAR(40) NOT NULL,
+   isrunend INT NOT NULL,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `kline15m`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `eventtime` BIGINT(20) NOT NULL,
+   `localtime` BIGINT(20) NOT NULL,
+   `starttime` BIGINT(20) NOT NULL,
+   `endtime` BIGINT(20) NOT NULL,
+   `num` BIGINT(20) NOT NULL,
+   `openpx` double(16,8),
+   `closepx` double(16,8),
+   `highpx` double(16,8),
+   `lowpx` double(16,8),
+   `cumqty` double(38,8),
+   `cumamt` double(38,8),
+   `activeqty` double(38,8),
+   `activeamt` double(38,8),
+   `symbol` VARCHAR(40) NOT NULL,
+   isrunend INT NOT NULL,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `kline30m`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `eventtime` BIGINT(20) NOT NULL,
+   `localtime` BIGINT(20) NOT NULL,
+   `starttime` BIGINT(20) NOT NULL,
+   `endtime` BIGINT(20) NOT NULL,
+   `num` BIGINT(20) NOT NULL,
+   `openpx` double(16,8),
+   `closepx` double(16,8),
+   `highpx` double(16,8),
+   `lowpx` double(16,8),
+   `cumqty` double(38,8),
+   `cumamt` double(38,8),
+   `activeqty` double(38,8),
+   `activeamt` double(38,8),
+   `symbol` VARCHAR(40) NOT NULL,
+   isrunend INT NOT NULL,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `kline1h`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `eventtime` BIGINT(20) NOT NULL,
+   `localtime` BIGINT(20) NOT NULL,
+   `starttime` BIGINT(20) NOT NULL,
+   `endtime` BIGINT(20) NOT NULL,
+   `num` BIGINT(20) NOT NULL,
+   `openpx` double(16,8),
+   `closepx` double(16,8),
+   `highpx` double(16,8),
+   `lowpx` double(16,8),
+   `cumqty` double(38,8),
+   `cumamt` double(38,8),
+   `activeqty` double(38,8),
+   `activeamt` double(38,8),
+   `symbol` VARCHAR(40) NOT NULL,
+   isrunend INT NOT NULL,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `kline2h`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `eventtime` BIGINT(20) NOT NULL,
+   `localtime` BIGINT(20) NOT NULL,
+   `starttime` BIGINT(20) NOT NULL,
+   `endtime` BIGINT(20) NOT NULL,
+   `num` BIGINT(20) NOT NULL,
+   `openpx` double(16,8),
+   `closepx` double(16,8),
+   `highpx` double(16,8),
+   `lowpx` double(16,8),
+   `cumqty` double(38,8),
+   `cumamt` double(38,8),
+   `activeqty` double(38,8),
+   `activeamt` double(38,8),
+   `symbol` VARCHAR(40) NOT NULL,
+   isrunend INT NOT NULL,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `kline4h`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `eventtime` BIGINT(20) NOT NULL,
+   `localtime` BIGINT(20) NOT NULL,
+   `starttime` BIGINT(20) NOT NULL,
+   `endtime` BIGINT(20) NOT NULL,
+   `num` BIGINT(20) NOT NULL,
+   `openpx` double(16,8),
+   `closepx` double(16,8),
+   `highpx` double(16,8),
+   `lowpx` double(16,8),
+   `cumqty` double(38,8),
+   `cumamt` double(38,8),
+   `activeqty` double(38,8),
+   `activeamt` double(38,8),
+   `symbol` VARCHAR(40) NOT NULL,
+   isrunend INT NOT NULL,
+   PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE IF NOT EXISTS `test1`(
    `id` INT UNSIGNED AUTO_INCREMENT,

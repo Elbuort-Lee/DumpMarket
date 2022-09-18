@@ -161,7 +161,6 @@
     <ClCompile Include="profile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="glogbase.h" />
     <ClInclude Include="HandleMsg.h" />
     <ClInclude Include="logfile.h" />
     <ClInclude Include="marketstruct.h" />

@@ -41,9 +41,6 @@
     <ClInclude Include="profile.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="glogbase.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="logfile.h">
       <Filter>头文件</Filter>
     </ClInclude>
