@@ -1,5 +1,5 @@
 /*
-V1.0.2.0 把KStreams 换成Kline1m
+V1.0.2.0 需要把KStreams 换成Kline1m，但没动
 
 
 */

@@ -143,7 +143,7 @@ void CRedisApiImpl::RecvMsg()
             {
                 m_spi->OnRecvTrans(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
             }
-            else if (strcmp(pRedisReply->element[1]->str, "Kline1m") == 0)
+            else if (strcmp(pRedisReply->element[1]->str, "KStreams") == 0)
             {
                 m_spi->OnRecvKline(pRedisReply->element[2]->str, pRedisReply->element[2]->len, 1);
             }
