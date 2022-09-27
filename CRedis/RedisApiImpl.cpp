@@ -109,13 +109,33 @@ int CRedisApiImpl::Psubscrib(const char * key)
     if (NULL == pRedisReply || pRedisReply->type != REDIS_REPLY_ARRAY)//订阅成功返回一个数组标识
     {
         printf("subscribe failed!\n");
-        freeReplyObject(pRedisReply);//当为null时，free会有问题
+        //freeReplyObject(pRedisReply);//当为null时，free会有问题
         return -1;
     }
     printf("subscribe %s success!\n",key);
-    freeReplyObject(pRedisReply);
+    if (pRedisReply != NULL)
+    {
+        freeReplyObject(pRedisReply);
+    }
     return 0;
 }
+
+int CRedisApiImpl::Publish(const char * key, const char * msg, int msgLen)
+{
+    redisReply *pRedisReply = (redisReply *)redisCommand(m_pRedisContext, "publish %s %s", key, msg);
+    if (NULL == pRedisReply || pRedisReply->type != REDIS_REPLY_ARRAY)//订阅成功返回一个数组标识
+    {
+        printf("subscribe failed!\n");
+        //freeReplyObject(pRedisReply);//当为null时，free会有问题
+        return -1;
+    }
+    if (pRedisReply != NULL)
+    {
+        freeReplyObject(pRedisReply);
+    }
+    return 0;
+}
+
 
 void CRedisApiImpl::RecvMsg()
 {

@@ -1,6 +1,6 @@
 /*
 V1.0.2.0 需要把KStreams 换成Kline1m，但没动
-
+V1.0.3.0 增加publish
 
 */
 
@@ -17,7 +17,7 @@ V1.0.2.0 需要把KStreams 换成Kline1m，但没动
 #include <string.h>
 #include <thread>
 
-#define VERSION "V1.0.2.0"
+#define VERSION "V1.0.3.0"
 
 
 
@@ -36,6 +36,7 @@ public:
     virtual int SetValue(const char* key, void* value);
 
     virtual int Psubscrib(const char* key);
+    virtual int Publish(const char* key, const char* msg, int msgLen);
 
 protected:
     void RecvMsg();
