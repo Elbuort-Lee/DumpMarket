@@ -17,5 +17,7 @@ public:
     virtual int SetValue(const char* key, void* value) = 0;
 
     virtual int Psubscrib(const char* key) = 0;
+
+    virtual int Publish(const char* key, const char* msg, int msgLen) = 0;
 };
 

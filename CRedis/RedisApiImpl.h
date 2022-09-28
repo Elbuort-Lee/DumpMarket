@@ -18,7 +18,7 @@ V1.0.4.0 删除publish函数，因为发布订阅不能在同一个库中
 #include <string.h>
 #include <thread>
 
-#define VERSION "V1.0.4.0"
+#define VERSION "V1.0.5.0"
 
 
 
@@ -37,6 +37,8 @@ public:
     virtual int SetValue(const char* key, void* value);
 
     virtual int Psubscrib(const char* key);
+
+    virtual int Publish(const char* key, const char* msg, int msgLen);
 
 protected:
     void RecvMsg();
