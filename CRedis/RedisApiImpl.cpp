@@ -5,6 +5,7 @@ CRedisApiImpl::CRedisApiImpl()
 {
     printf("version : %s\n",VERSION);
     m_pRedisContext = nullptr;
+    m_pRedisPublish = nullptr;
     m_spi = nullptr;
     m_recvmsg_th = std::thread(&CRedisApiImpl::RecvMsg, this);
 
@@ -17,6 +18,11 @@ CRedisApiImpl::~CRedisApiImpl()
     {
         redisFree(m_pRedisContext);
         m_pRedisContext = nullptr;
+    }
+    if (m_pRedisPublish)
+    {
+        redisFree(m_pRedisPublish);
+        m_pRedisPublish = nullptr;
     }
 
 }
@@ -53,6 +59,19 @@ int CRedisApiImpl::Connect(const char* ip, int port, const char* passwd, int db)
         freeReplyObject(pRedisReply);
     }
     m_pRedisContext = pRedisContext;
+
+    redisContext* pRedisContext1 = redisConnect(ip, port);
+    redisReply *pRedisReply1 = (redisReply*)redisCommand(pRedisContext1, "AUTH %s", passwd);
+    if (NULL != pRedisReply1)
+    {
+        freeReplyObject(pRedisReply1);
+    }
+    pRedisReply1 = (redisReply*)redisCommand(pRedisContext1, "SELECT %d", db);
+    if (NULL != pRedisReply1)
+    {
+        freeReplyObject(pRedisReply1);
+    }
+    m_pRedisPublish = pRedisContext1;
     return 0;
 }
 
@@ -121,7 +140,7 @@ int CRedisApiImpl::Psubscrib(const char * key)
 
 int CRedisApiImpl::Publish(const char * key, const char * msg, int msgLen)
 {
-    redisReply *pRedisReply = (redisReply *)redisCommand(m_pRedisContext, "publish %s %s", key, msg);
+    redisReply *pRedisReply = (redisReply *)redisCommand(m_pRedisPublish, "publish %s %s", key, msg);
     if (NULL == pRedisReply || pRedisReply->type != REDIS_REPLY_INTEGER)//成功推送几个就会有几个
     {
         printf("publish failed!\n");

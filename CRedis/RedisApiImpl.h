@@ -52,10 +52,10 @@ private:
 
 
     redisContext* m_pRedisContext;
-
+    redisContext* m_pRedisPublish;
     std::thread m_recvmsg_th;
 
-
+    
 
 
 };
