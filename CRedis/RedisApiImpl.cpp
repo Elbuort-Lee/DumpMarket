@@ -174,17 +174,29 @@ void CRedisApiImpl::RecvMsg()
             {
                 continue;
             }
-            if (strcmp(pRedisReply->element[1]->str, "QuoteE") == 0)
+            if (strcmp(pRedisReply->element[1]->str, "FutureQuoteE") == 0)
             {
-                m_spi->OnRecvQuoteE(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
+                m_spi->OnFutureQuoteE(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
             }
-            else if (strcmp(pRedisReply->element[1]->str, "Trans") == 0)
+            else if (strcmp(pRedisReply->element[1]->str, "FutureTrans") == 0)
             {
-                m_spi->OnRecvTrans(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
+                m_spi->OnFutureTrans(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
             }
-            else if (strcmp(pRedisReply->element[1]->str, "KStreams") == 0)
+            else if (strcmp(pRedisReply->element[1]->str, "FutureKline1") == 0)
             {
-                m_spi->OnRecvKline(pRedisReply->element[2]->str, pRedisReply->element[2]->len, 1);
+                m_spi->OnFutureKline1(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
+            }
+            else if (strcmp(pRedisReply->element[1]->str, "FutureKline3") == 0)
+            {
+                m_spi->OnFutureKline3(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
+            }
+            else if (strcmp(pRedisReply->element[1]->str, "FutureKline5") == 0)
+            {
+                m_spi->OnFutureKline5(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
+            }
+            else if (strcmp(pRedisReply->element[1]->str, "FutureKline15") == 0)
+            {
+                m_spi->OnFutureKline15(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
             }
             freeReplyObject(pRedisReply);
         }

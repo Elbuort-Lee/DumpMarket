@@ -1,7 +1,9 @@
 /*
-V1.0.2.0 需要把KStreams 换成Kline1m，但没动
-V1.0.3.0 增加publish 
-V1.0.4.0 删除publish函数，因为发布订阅不能在同一个库中
+wli 20220911 V1.0.2.0 需要把KStreams 换成Kline1m，但没动
+wli 20220916 V1.0.3.0 增加publish 
+wli 20220926 V1.0.4.0 删除publish函数，因为发布订阅不能在同一个库中
+wli 20220928 V1.0.5.0 增加publish ，管理两个或多个tcp,让发布订阅在同一个库中
+wli 20220930 V2.0.0.0 更改为合约期货，之前的现货不维护了
 
 */
 
@@ -18,7 +20,7 @@ V1.0.4.0 删除publish函数，因为发布订阅不能在同一个库中
 #include <string.h>
 #include <thread>
 
-#define VERSION "V1.0.5.0"
+#define VERSION "V2.0.0.0_credis"
 
 
 

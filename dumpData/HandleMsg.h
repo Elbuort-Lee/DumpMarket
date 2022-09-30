@@ -1,6 +1,6 @@
 /*
 v1.0.2.0 : 修复HandleTrans中的m_quoteE_cv为m_trans_cv，修复HandleKline1中的m_quoteE_cv为m_kline1_cv
-
+wli 20220930 V2.0.0.0_dumpdata 落盘合约期货数据，之前现货数据丢弃
 
 */
 #pragma once
@@ -9,6 +9,7 @@ v1.0.2.0 : 修复HandleTrans中的m_quoteE_cv为m_trans_cv，修复HandleKline1中的m_quo
 #include "RedisSpi.h"
 #include "profile.h"
 #include "logfile.h"
+#include "CJsonObject.hpp"
 
 #include<stdio.h>
 #include<queue>
@@ -18,7 +19,7 @@ v1.0.2.0 : 修复HandleTrans中的m_quoteE_cv为m_trans_cv，修复HandleKline1中的m_quo
 #include <sys/timeb.h>
 #include <string.h>
 
-#define VERSION "v1.0.2.0"
+#define VERSION "V2.0.0.0_dumpdata"
 
 class HandleMsg : public CRedisSpi
 {
@@ -30,11 +31,14 @@ public:
     void Start();
     void StartThread();
 public:
-    virtual void OnRecvQuoteE(const char* msg, int len);//盘口
-    virtual void OnRecvTrans(const char* msg, int len);//逐笔成交
-    //type=1-60,分钟级，小时级，日级，月级等
-    virtual void OnRecvKline(const char* msg, int len, int type);//K线-级别
     virtual void OnRecvOtherMsg(const char* msg, int len);//其他
+
+    virtual void OnFutureQuoteE(const char* msg, int len);//盘口
+    virtual void OnFutureTrans(const char* msg, int len);//逐笔成交
+    virtual void OnFutureKline1(const char* msg, int len);//K线-1分钟
+    virtual void OnFutureKline3(const char* msg, int len);//K线-3分钟
+    virtual void OnFutureKline5(const char* msg, int len);//K线-5分钟
+    virtual void OnFutureKline15(const char* msg, int len);//K线-15分钟
 
 protected:
     //确保消息能迅速落盘，并且确保消息的顺序性，需要三个线程，三个队列来处理三种消息。
@@ -48,6 +52,7 @@ protected:
     void HandleKline1();
 
     bool ReadConfig(const char* fileName);
+    KlineType KlineTypeChange(const char* str);
     
 private:
     std::string m_path;
