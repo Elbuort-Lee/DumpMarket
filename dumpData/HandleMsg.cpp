@@ -387,7 +387,7 @@ void HandleMsg::HandleKline1()
                 Kline line;
                 memset(&line, 0, sizeof(Kline));
                 line.localtime = t.time * 1000 + t.millitm;
-                line.servertime = atoll(sz_json("E").c_str());
+                sz_json.Get("E", line.servertime);
                 strcpy(line.symbol, sz_json("ps").c_str());
                 line.securityType = SecurityType::future;
                 line.starttime = atoll(sz_json["k"]("t").c_str());
