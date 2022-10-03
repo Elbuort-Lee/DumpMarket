@@ -1,7 +1,7 @@
 /*
 v1.0.2.0 : 修复HandleTrans中的m_quoteE_cv为m_trans_cv，修复HandleKline1中的m_quoteE_cv为m_kline1_cv
 wli 20220930 V2.0.0.0_dumpdata 落盘合约期货数据，之前现货数据丢弃
-
+wli 20221003 V2.0.0.1_dumpdata 修改json.c大小写敏感
 */
 #pragma once
 #include "marketstruct.h"
@@ -19,7 +19,7 @@ wli 20220930 V2.0.0.0_dumpdata 落盘合约期货数据，之前现货数据丢弃
 #include <sys/timeb.h>
 #include <string.h>
 
-#define VERSION "V2.0.0.0_dumpdata"
+#define VERSION "V2.0.0.1_dumpdata"
 
 class HandleMsg : public CRedisSpi
 {
