@@ -198,6 +198,10 @@ void CRedisApiImpl::RecvMsg()
             {
                 m_spi->OnFutureKline15(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
             }
+            else if (strcmp(pRedisReply->element[1]->str, "FutureKline240") == 0)
+            {
+                m_spi->OnFutureKline240(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
+            }
             freeReplyObject(pRedisReply);
         }
         else

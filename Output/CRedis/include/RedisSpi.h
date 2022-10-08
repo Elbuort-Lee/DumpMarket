@@ -9,6 +9,7 @@ public:
     virtual void OnFutureKline3(const char* msg, int len) = 0;//K线-3分钟
     virtual void OnFutureKline5(const char* msg, int len) = 0;//K线-5分钟
     virtual void OnFutureKline15(const char* msg, int len) = 0;//K线-15分钟
+    virtual void OnFutureKline240(const char* msg, int len) = 0;//K线-4h
     virtual void OnRecvOtherMsg(const char* msg, int len) = 0;//其他
 
 };
