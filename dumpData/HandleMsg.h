@@ -39,7 +39,9 @@ public:
     virtual void OnFutureKline3(const char* msg, int len);//K线-3分钟
     virtual void OnFutureKline5(const char* msg, int len);//K线-5分钟
     virtual void OnFutureKline15(const char* msg, int len);//K线-15分钟
-
+	virtual void OnSpotKline1m(const char* msg, int len) {};//现货K线
+	virtual void OnSpotQuoteE(const char* msg, int len) {};//现货盘口
+	virtual void OnSpotTrans(const char* msg, int len) {};//现货逐笔成交
 protected:
     //确保消息能迅速落盘，并且确保消息的顺序性，需要三个线程，三个队列来处理三种消息。
     //最快处理字符串的方法是，使用指针去取定长的数据，来进行解析字符串，这样的需要字符串的格式固定，本场景满足，所以采用。
