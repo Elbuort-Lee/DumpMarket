@@ -202,6 +202,18 @@ void CRedisApiImpl::RecvMsg()
             {
                 m_spi->OnFutureKline240(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
             }
+			else if (strcmp(pRedisReply->element[1]->str, "SpotKline1m") == 0)
+			{
+				m_spi->OnSpotKline1m(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
+			}
+			else if (strcmp(pRedisReply->element[1]->str, "SpotQuoteE") == 0)
+			{
+				m_spi->OnSpotQuoteE(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
+			}
+			else if (strcmp(pRedisReply->element[1]->str, "SpotTrans") == 0)
+			{
+				m_spi->OnSpotTrans(pRedisReply->element[2]->str, pRedisReply->element[2]->len);
+			}
             freeReplyObject(pRedisReply);
         }
         else
